@@ -1,1 +1,3 @@
 API_KEY = "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"
+
+#API_KEY = "sk-proj-MZUd37O1NhNVwd4d8m33T3BlbkFJ2XLbmGicl8DKgP601xxD"

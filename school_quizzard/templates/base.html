@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Generation App</title>
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz App</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="paragraph">Enter a paragraph of text:</label>
+            <textarea id="paragraph" name="paragraph" rows="10" placeholder="Type your paragraph here..."></textarea>
+            <button type="submit">Generate Questions</button>
+        </form>
+        <div id="questions-container">
+            {% if questions %}
+                {% for question in questions %}
+                    <p>{{ question }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

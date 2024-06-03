@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse
-
+from .services import generate_question
 # Create your views here.
 
 # def index(request):
@@ -12,4 +12,9 @@ from django.shortcuts import render,HttpResponse
 #     return HttpResponse("This is our Services Page")
 
 def home(request):
+    if request.method == "POST":
+        text = request.POST['paragraph']
+        questions = generate_question(text)
+        context = {'questions': questions}
+        return render(request, 'base.html', context)
     return render(request,'base.html')

@@ -1,17 +1,17 @@
-import opentai
+import openai
 from . import config
 import sqlite3
 
 openai.api_key = config.API_KEY
 
-def initialize_database(self):
+def initialize_database():
     #connect to the SQlite database
     conn = sqlite3.connect('questions.db')
     cursor = conn.cursor()
     
     #create a table if doesn't exist
     cursor.execute('''Create table if not exists questions
-                   (id integer primary key, key text unique, vale text)''')
+                   (id integer primary key, key text unique, value text)''')
     conn.commit()
     conn.close()
 
@@ -28,8 +28,8 @@ def generate_question(text):
              f"Under the possible answer we should have the correctanswer"
     
     #generating question using the CHATGPT API
-    response = openai.completion.create(
-        engine = "text_davinci-003",
+    response = openai.Completion.create(
+        engine = "gpt-3.5-turbo",
         prompt = prompt,
         max_token = 3500,
         stop = None,
@@ -45,10 +45,32 @@ def generate_question(text):
     base_key = ''.join(text.split()[:2])
     key = base_key
     index = 1
-    # while
+    while key_exists(cursor,key):
+        key = f"{base_key}{index}"
+        index +=1
 
-def key_exists():
-    cursor.execute("S   ")
+        # Insert questions into our databases
+
+        value = questions
+        cursor.execute("Insert into questions(key,value) values (?,?)",(key,value))
+        conn.commit()
+
+        return questions
+
+def key_exists(cursor,key):
+    cursor.execute("Select count(*) from questions where key=?", (key,))
+    count = cursor.fetchone()[0]
+    return count>0
 
 def print_all_questions():
-    pass
+    initialize_database()
+
+    #connect to the SQLite database
+    conn = sqlite3.connect('questions.db')
+    cursor = conn.cursor()
+    # Retrive all rows from the databases
+
+    cursor.execute("Select * from questions")
+    rows = cursor.fetchall()
+
+    return rows
