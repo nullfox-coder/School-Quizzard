@@ -1,3 +1,5 @@
-API_KEY = "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"
+from dotenv import load_dotenv
 
-#API_KEY = "sk-proj-MZUd37O1NhNVwd4d8m33T3BlbkFJ2XLbmGicl8DKgP601xxD"
+load_dotenv()
+
+API_KEY = str(os.getenv('API_KEY'))
