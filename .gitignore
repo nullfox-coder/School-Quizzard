@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 #private file
-config.py
+school_quizzard\quiz_app\config.py
 
 # Distribution / packaging
 .Python
